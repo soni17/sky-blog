@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy add_comment ]
   before_action :require_login, except: %i[ index show ]
   skip_before_action :verify_authenticity_token, :only => [:add_comment]
-  
+
   # GET /posts
   def index
     @posts = Post.all
@@ -51,10 +51,11 @@ class PostsController < ApplicationController
   def add_comment
     @post.comments << Comment.create(post: @post, body: params[:comment], user_id: 1)
     @comments = @post.comments
-    render partial: 'comment'
+    render partial: "comment"
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = Post.find(params[:id])

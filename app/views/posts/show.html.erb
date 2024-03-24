@@ -10,7 +10,7 @@
   function submitComment() {
     var comment = document.getElementById("comment");
     var table = document.getElementById('comments-table');
-    fetch(`<%= root_url %>add-comment?comment=${comment.value}&id=<%=@post.id%>`, {method: "post"})
+    fetch(`<%= root_url %>add-comment?comment=${comment.value}&id=<%= @post.id %>`, {method: "post"})
       .then(res => res.text())
       .then(data => table.innerHTML = data);
     document.getElementById("comment-area").innerHTML = '';
@@ -33,7 +33,7 @@
 <table id="comments-table">
   <% @comments.each do |comment| %>
     <tr>
-      <td><%= comment.user.first_name + ' ' + comment.user.last_name %></td>
+      <td><%= comment.user.first_name + " " + comment.user.last_name %></td>
       <td><%= comment.body %></td>
     </tr>
   <% end %>

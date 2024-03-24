@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-      if current_user.nil?
+    if current_user.nil?
       redirect_to posts_url, notice: "Login required"
     end
   end
