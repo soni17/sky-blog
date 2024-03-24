@@ -1,0 +1,13 @@
+<div id="<%= dom_id post %>">
+  <p class="title">
+    <%= post.title %>
+  </p>
+
+  <p>
+    created: <%= post.created_at.strftime("%m/%d/%Y") %>
+  </p>
+
+  <p>
+    <%= post.body %>
+  </p>
+</div>
