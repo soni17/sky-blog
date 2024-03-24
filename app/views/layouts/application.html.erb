@@ -11,6 +11,13 @@
   </head>
 
   <body>
+    <% if current_user %>
+      Logged in as: <%= current_user.first_name + ' ' + current_user.last_name %> <br>
+      <%= button_to "Sign Out", logout_path,  method: :delete %>
+    <% else %>
+      <%= link_to "Sign up", sign_up_path %> | 
+      <%= link_to "Sign In", sign_in_path %>
+    <% end %>
     <h1>SKY BLOG</h1>
     <%= link_to "All posts", posts_path %> | 
     <%= link_to "New post", new_post_path %>
