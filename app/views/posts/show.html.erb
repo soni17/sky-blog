@@ -1,3 +1,22 @@
+<script>
+  function addComment() {
+    var commentArea = document.getElementById("comment-area");
+    commentArea.innerHTML= `
+      <textarea id="comment"></textarea>
+      <button onclick="submitComment()" id="submit-button">Submit Comment</button>
+    `;
+  }
+
+  function submitComment() {
+    var comment = document.getElementById("comment");
+    var table = document.getElementById('comments-table');
+    fetch(`<%= root_url %>add-comment?comment=${comment.value}&id=<%=@post.id%>`, {method: "post"})
+      .then(res => res.text())
+      .then(data => table.innerHTML = data);
+    document.getElementById("comment-area").innerHTML = '';
+  }
+</script>
+
 <p style="color: green"><%= notice %></p>
 
 <%= render @post %>
@@ -6,3 +25,25 @@
   <%= link_to "Edit this post", edit_post_path(@post) %>
   <%= button_to "Destroy this post", @post, method: :delete %>
 </div>
+
+<div class="comments-section">
+  <h3>comments(<%= @comments.count %>)</h3>
+</div>
+
+<table id="comments-table">
+  <% @comments.each do |comment| %>
+    <tr>
+      <td><%= comment.user.first_name + ' ' + comment.user.last_name %></td>
+      <td><%= comment.body %></td>
+    </tr>
+  <% end %>
+</table>
+
+<% if current_user %>
+  <div id="add-comment">
+    <button onclick="addComment()">Add Comment</button>
+  </div>
+
+  <div id="comment-area">
+  </div>
+<% end %>

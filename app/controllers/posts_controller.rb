@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy add_comment ]
   before_action :require_login, except: %i[ index show ]
-
+  skip_before_action :verify_authenticity_token, :only => [:add_comment]
+  
   # GET /posts
   def index
     @posts = Post.all
@@ -45,6 +46,12 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy!
     redirect_to posts_url, notice: "Post was successfully destroyed."
+  end
+
+  def add_comment
+    @post.comments << Comment.create(post: @post, body: params[:comment], user_id: 1)
+    @comments = @post.comments
+    render partial: 'comment'
   end
 
   private
